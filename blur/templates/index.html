@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Blur AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>🖐️ Gesture Blur AI</h1>
+
+            <div class="status">
+
+                <span class="dot"></span>
+
+                <span id="status">Camera Connected</span>
+
+            </div>
+
+        </div>
+
+        <div class="camera">
+
+            <img id="video" src="{{ url_for('video') }}">
+
+        </div>
+
+        <div class="footer">
+
+            <div>
+
+                <h3>AI Status</h3>
+                <p id="aiStatus">Waiting...</p>
+
+            </div>
+
+            <div>
+
+                <h3>Time</h3>
+                <p id="clock"></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

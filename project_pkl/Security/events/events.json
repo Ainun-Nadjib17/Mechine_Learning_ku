@@ -1,0 +1,38 @@
+[
+    {
+        "timestamp": "2025-12-27 05:51:58",
+        "reason": "Significant change vs baseline (diff=0.182)"
+    },
+    {
+        "timestamp": "2025-12-27 05:52:04",
+        "reason": "Significant change vs baseline (diff=0.211)"
+    },
+    {
+        "timestamp": "2025-12-27 05:52:10",
+        "reason": "Significant change vs baseline (diff=0.256)"
+    },
+    {
+        "timestamp": "2025-12-27 05:52:17",
+        "reason": "Significant change vs baseline (diff=0.188)"
+    },
+    {
+        "timestamp": "2025-12-27 05:52:23",
+        "reason": "Significant change vs baseline (diff=0.183)"
+    },
+    {
+        "timestamp": "2025-12-27 05:52:29",
+        "reason": "Person detected + motion (ppl=1, mot=0.040)"
+    },
+    {
+        "timestamp": "2025-12-27 05:52:48",
+        "reason": "Significant change vs baseline (diff=0.272)"
+    },
+    {
+        "timestamp": "2025-12-27 05:54:51",
+        "reason": "Significant change vs baseline (diff=0.190)"
+    },
+    {
+        "timestamp": "2025-12-27 05:54:57",
+        "reason": "Significant change vs baseline (diff=0.246)"
+    }
+]
