@@ -1,0 +1,38 @@
+from tensorflow.keras.models import load_model
+import numpy as np
+from tensorflow.keras.preprocessing import image
+from tkinter import Tk, filedialog
+import matplotlib.pyplot as plt
+from PIL import Image
+
+# Load model
+model = load_model("brain_tumor_model.h5")
+classes = ['glioma', 'meningioma', 'notumor', 'pituitary']
+
+# Buka file dialog untuk pilih gambar
+root = Tk()
+root.withdraw()  # sembunyikan jendela utama Tkinter
+img_path = filedialog.askopenfilename(title="Pilih gambar", filetypes=[("Image files", "*.jpg *.jpeg *.png")])
+if not img_path:
+    print("Tidak ada gambar yang dipilih!")
+    exit()
+
+# Load image untuk prediksi
+img = image.load_img(img_path, target_size=(224,224))
+img_array = image.img_to_array(img) / 255.0
+img_array = np.expand_dims(img_array, axis=0)
+
+# Predict
+pred = model.predict(img_array)
+predicted_class = classes[np.argmax(pred)]
+confidence = float(np.max(pred)) * 100
+
+# Tampilkan gambar dengan prediksi
+img_show = Image.open(img_path)
+plt.imshow(img_show)
+plt.axis('off')
+plt.title(f"Prediksi: {predicted_class} ({confidence:.2f}%)", fontsize=14, color='red')
+plt.show()
+
+print("Prediksi:", predicted_class)
+print("Confidence:", f"{confidence:.2f}%")
