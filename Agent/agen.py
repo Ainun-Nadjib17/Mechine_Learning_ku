@@ -16,7 +16,7 @@ PORTFOLIO_URL = "https://ainun-nadjib17.github.io/AinunNadjib.github.io/portofol
 
 # ⚠️ CEK LAGI API KEY LU! Format Gemini biasanya diawali "AIza..."
 # Kalau "AQ.Ab8..." itu bukan format Gemini, kemungkinan salah copy
-GROQ_API_KEY = "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"
+GROQ_API_KEY = ""
 
 # Setup Groq client
 client_groq = Groq(api_key=GROQ_API_KEY)
