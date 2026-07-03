@@ -1,19 +1,28 @@
 from flask import Flask, render_template, Response
 import cv2
 import mediapipe as mp
+import time
 
 app = Flask(__name__)
 
 mp_hands = mp.solutions.hands
 
 hands = mp_hands.Hands(
+    static_image_mode=False,
     max_num_hands=1,
-    min_detection_confidence=0.7,
-    min_tracking_confidence=0.7
+    model_complexity=0,
+    min_detection_confidence=0.6,
+    min_tracking_confidence=0.6
 )
 
+# Coba tanpa CAP_DSHOW dulu kalau kamera tidak muncul
 camera = cv2.VideoCapture(0)
 
+camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+if not camera.isOpened():
+    raise RuntimeError("Gagal membuka kamera!")
 
 def finger_up(hand_landmarks):
     tip = [4, 8, 12, 16, 20]
@@ -42,10 +51,11 @@ def generate():
         success, frame = camera.read()
 
         if not success:
-            break
+            continue
+
+        frame = cv2.resize(frame, (640, 480))
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
         result = hands.process(rgb)
 
         blur = False
@@ -61,7 +71,7 @@ def generate():
 
         if blur:
 
-            frame = cv2.GaussianBlur(frame, (51, 51), 0)
+            frame = cv2.GaussianBlur(frame, (21,21), 0)
 
             cv2.putText(
                 frame,
@@ -73,16 +83,20 @@ def generate():
                 2
             )
 
-        ret, buffer = cv2.imencode(".jpg", frame)
+        ret, buffer = cv2.imencode(
+            ".jpg",
+            frame,
+            [int(cv2.IMWRITE_JPEG_QUALITY),70]
+        )
 
-        frame = buffer.tobytes()
-
-        yield(
+        yield (
             b'--frame\r\n'
             b'Content-Type: image/jpeg\r\n\r\n' +
-            frame +
+            buffer.tobytes() +
             b'\r\n'
         )
+
+        time.sleep(0.03)
 
 
 @app.route("/")
@@ -94,9 +108,15 @@ def index():
 def video():
     return Response(
         generate(),
-        mimetype='multipart/x-mixed-replace; boundary=frame'
+        mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=False,
+        threaded=True,
+        use_reloader=False
+    )

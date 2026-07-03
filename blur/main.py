@@ -49,7 +49,7 @@ while True:
 
     if blur:
         frame = cv2.GaussianBlur(frame, (51, 51), 0)
-        cv2.putText(frame, "PEACE DETECTED", (20, 40),
+        cv2.putText(frame, "", (20, 40),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
 
     cv2.imshow("Gesture Blur", frame)
