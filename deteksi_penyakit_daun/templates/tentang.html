@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}Tentang{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Tentang Sistem</h1>
+        <p class="lead">Pelajari lebih lanjut tentang teknologi di balik TomatAI</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Latar Belakang -->
+        <div class="content-card mb-4">
+            <h2>Latar Belakang</h2>
+            <p>
+                Penyakit pada daun tomat merupakan salah satu masalah utama dalam budidaya tomat.
+                Jika tidak ditangani dengan cepat, penyakit dapat menyebabkan kerugian besar bagi petani.
+                TomatAI hadir sebagai solusi berbasis kecerdasan buatan untuk membantu mengidentifikasi
+                penyakit daun tomat secara dini dan akurat.
+            </p>
+        </div>
+
+        <!-- Computer Vision -->
+        <div class="content-card mb-4">
+            <h2>Apa itu Computer Vision?</h2>
+            <p>
+                Computer Vision adalah bidang kecerdasan buatan yang memungkinkan komputer untuk
+                "melihat" dan memahami konten visual seperti gambar dan video. Dalam konteks ini,
+                computer vision digunakan untuk menganalisis gambar daun tomat dan mengidentifikasi
+                gejala penyakit yang tampak.
+            </p>
+        </div>
+
+        <!-- YOLOv8 -->
+        <div class="content-card mb-4">
+            <h2>YOLOv8</h2>
+            <p>
+                YOLO (You Only Look Once) adalah model deep learning untuk deteksi objek secara
+                real-time. YOLOv8 merupakan versi terbaru yang menawarkan akurasi tinggi dan
+                kecepatan pemrosesan yang cepat. Model ini mampu mendeteksi dan mengklasifikasikan
+                berbagai jenis penyakit daun tomat dalam satu proses.
+            </p>
+            <ul>
+                <li>Deteksi objek secara real-time</li>
+                <li>Akurasi tinggi pada berbagai kondisi</li>
+                <li>Ringan dan efisien</li>
+            </ul>
+        </div>
+
+        <!-- Dataset -->
+        <div class="content-card mb-4">
+            <h2>Dataset</h2>
+            <p>
+                Model ini dilatih menggunakan dataset PlantVillage yang merupakan kumpulan gambar
+                daun tomat dengan berbagai kondisi kesehatan. Dataset ini mencakup berbagai jenis
+                penyakit dan kondisi sehat, sehingga model dapat belajar mengenali perbedaan
+                antara daun yang sehat dan yang terinfeksi.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

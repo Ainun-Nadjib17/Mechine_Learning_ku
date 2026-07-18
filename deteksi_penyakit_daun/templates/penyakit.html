@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}Informasi Penyakit{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Informasi Penyakit</h1>
+        <p class="lead">Pelajari berbagai penyakit daun tomat yang dapat dideteksi</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            {% for name, info in diseases.items() %}
+            <div class="col-md-6 col-lg-4">
+                <a href="/penyakit/{{ name }}" class="text-decoration-none">
+                    <div class="disease-card">
+                        <div class="disease-card-header">
+                            <h5>{{ name }}</h5>
+                            <span class="badge badge-{{ info.danger_level|lower }}">
+                                {{ info.danger_level }}
+                            </span>
+                        </div>
+                        <div class="disease-card-body">
+                            <p class="scientific-name">{{ info.scientific_name }}</p>
+                            <p class="disease-desc">{{ info.cause[:100] }}...</p>
+                        </div>
+                        <div class="disease-card-footer">
+                            Lihat Detail →
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ disease_name }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <a href="/penyakit" class="btn btn-outline-light btn-sm mb-3">← Kembali ke Daftar Penyakit</a>
+        <h1>{{ disease_name }}</h1>
+        <p class="lead">{{ disease.scientific_name }}</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Tingkat Bahaya -->
+                <div class="detail-card mb-4">
+                    <div class="detail-header">
+                        <h4>Tingkat Bahaya</h4>
+                    </div>
+                    <div class="detail-body">
+                        <span class="badge badge-lg badge-{{ disease.danger_level|lower }}">
+                            {{ disease.danger_level }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Penyebab -->
+                <div class="detail-card mb-4">
+                    <div class="detail-header">
+                        <h4>Penyebab</h4>
+                    </div>
+                    <div class="detail-body">
+                        <p>{{ disease.cause }}</p>
+                    </div>
+                </div>
+
+                <!-- Gejala -->
+                <div class="detail-card mb-4">
+                    <div class="detail-header">
+                        <h4>Gejala</h4>
+                    </div>
+                    <div class="detail-body">
+                        <ul class="detail-list">
+                            {% for s in disease.symptoms %}
+                            <li>{{ s }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Pencegahan -->
+                <div class="detail-card mb-4">
+                    <div class="detail-header">
+                        <h4>Pencegahan</h4>
+                    </div>
+                    <div class="detail-body">
+                        <ul class="detail-list prevention">
+                            {% for p in disease.prevention %}
+                            <li>{{ p }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Penanganan -->
+                <div class="detail-card mb-4">
+                    <div class="detail-header">
+                        <h4>Penanganan</h4>
+                    </div>
+                    <div class="detail-body">
+                        <ul class="detail-list treatment">
+                            {% for t in disease.treatment %}
+                            <li>{{ t }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Referensi -->
+                <div class="detail-card mb-4">
+                    <div class="detail-header">
+                        <h4>Referensi</h4>
+                    </div>
+                    <div class="detail-body">
+                        <div class="reference-tags">
+                            {% for r in disease.references %}
+                            <span class="reference-tag">{{ r }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
