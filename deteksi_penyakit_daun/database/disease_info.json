@@ -1,0 +1,261 @@
+{
+  "Tomato Bacterial Spot": {
+    "scientific_name": "Xanthomonas campestris pv. vesicatoria",
+    "cause": "Disebabkan oleh bakteri Xanthomonas campestris pv. vesicatoria yang menyebar melalui air hujan, irigasi, dan kontak langsung.",
+    "symptoms": [
+      "Bercak kecil berair pada daun",
+      "Bercak coklat gelap dengan tepi berwarna kuning",
+      "Daun menguning dan rontok",
+      "Buah memiliki lesi kecil berwarna gelap"
+    ],
+    "prevention": [
+      "Gunakan benih yang sehat dan bebas bakteri",
+      "Hindari penyiraman dari atas (overhead irrigation)",
+      "Lakukan rotasi tanaman minimal 2 tahun"
+    ],
+    "treatment": [
+      "Semprotkan bakterisida berbahan tembaga (kuprisida)",
+      "Buang dan bakar bagian tanaman yang terinfeksi",
+      "Gunakan pupuk kandang untuk meningkatkan kekebalan tanaman"
+    ],
+    "danger_level": "Tinggi",
+    "references": [
+      "PlantVillage",
+      "Kementerian Pertanian RI",
+      "American Phytopathological Society"
+    ]
+  },
+  "Tomato Early blight": {
+    "scientific_name": "Alternaria solani",
+    "cause": "Disebabkan oleh jamur Alternaria solani yang berkembang pada suhu hangat dan kelembapan tinggi.",
+    "symptoms": [
+      "Bercak coklat pada daun dengan pola konsentris",
+      "Daun menguning dari bagian bawah",
+      "Daun mengering dan rontok",
+      "Bercak menyebar ke batang dan buah"
+    ],
+    "prevention": [
+      "Rotasi tanaman dengan tanaman non-solanacea",
+      "Gunakan benih sehat",
+      "Kurangi kelembapan di sekitar tanaman"
+    ],
+    "treatment": [
+      "Gunakan fungisida sesuai anjuran",
+      "Pangkas daun terinfeksi",
+      "Buang sisa tanaman yang sakit"
+    ],
+    "danger_level": "Sedang",
+    "references": [
+      "PlantVillage",
+      "FAO",
+      "Kementerian Pertanian RI"
+    ]
+  },
+  "Tomato Late blight": {
+    "scientific_name": "Phytophthora infestans",
+    "cause": "Disebabkan oleh oomycete Phytophthora infestans yang menyebar cepat pada kondisi lembap dan dingin.",
+    "symptoms": [
+      "Bercak hijau keabu-abuan basah pada daun",
+      "Jamur putih di bagian bawah daun",
+      "Daun membusuk dengan cepat",
+      "Batang berwarna coklat gelap dan membusuk"
+    ],
+    "prevention": [
+      "Pilih varietas tahan late blight",
+      "Hindari kelembapan berlebih pada tanaman",
+      "Jaga jarak tanam yang cukup"
+    ],
+    "treatment": [
+      "Semprotkan fungisida berbahan aktif metalaksil atau klorotalonil",
+      "Buang seluruh bagian tanaman yang terinfeksi segera",
+      "Tingkatkan sirkulasi udara di sekitar tanaman"
+    ],
+    "danger_level": "Tinggi",
+    "references": [
+      "PlantVillage",
+      "CABI",
+      "IRISA"
+    ]
+  },
+  "Tomato Leaf Mold": {
+    "scientific_name": "Passalora fulva",
+    "cause": "Disebabkan oleh jamur Passalora fulva (sebelumnya Fulvia fulva) yang berkembang di lingkungan lembap.",
+    "symptoms": [
+      "Bercak kuning di permukaan atas daun",
+      "Lapisan jamur oliv-hijau di bagian bawah daun",
+      "Daun menguning dan rontok",
+      "Penurunan kualitas buah"
+    ],
+    "prevention": [
+      "Kontrol kelembapan di bawah 85%",
+      "Gunakan varietas tahan",
+      "Pastikan sirkulasi udara baik"
+    ],
+    "treatment": [
+      "Gunakan fungisida berbahan klorotalonil atau mankozeb",
+      "Buang daun yang terinfeksi",
+      "Tingkatkan ventilasi pada greenhouse"
+    ],
+    "danger_level": "Sedang",
+    "references": [
+      "PlantVillage",
+      "Royal Horticultural Society",
+      "Kementerian Pertanian RI"
+    ]
+  },
+  "Tomato Septoria leaf spot": {
+    "scientific_name": "Septoria lycopersici",
+    "cause": "Disebabkan oleh jamur Septoria lycopersici yang menyebar melalui percikan air dan angin.",
+    "symptoms": [
+      "Bercak kecil bulat dengan tepi gelap",
+      "Pusat bercak berwarna abu-abu",
+      "Bintik-bintik hitam kecil (pycnidia) di pusat bercak",
+      "Daun menguning dan rontok dari bawah ke atas"
+    ],
+    "prevention": [
+      "Hindari kontak daun dengan tanah",
+      "Gunakan mulsa untuk mencegah percikan air",
+      "Lakukan rotasi tanaman"
+    ],
+    "treatment": [
+      "Semprotkan fungisida berbahan klorotalonil atau mankozeb",
+      "Pangkas daun bawah yang terinfeksi",
+      "Buang sisa tanaman setelah panen"
+    ],
+    "danger_level": "Sedang",
+    "references": [
+      "PlantVillage",
+      "Cornell University",
+      "Kementerian Pertanian RI"
+    ]
+  },
+  "Tomato Spider mites Two-spotted spider mite": {
+    "scientific_name": "Tetranychus urticae",
+    "cause": "Disebabkan oleh hama Tetranychus urticae (spider mite) yang menghisap cairan daun.",
+    "symptoms": [
+      "Daun berbintik kuning kecil",
+      "Jaring halus seperti sarang laba-laba di bawah daun",
+      "Daun mengering dan coklat",
+      "Pertumbuhan tanaman terhambat"
+    ],
+    "prevention": [
+      "Semprotkan air secara rutin ke bagian bawah daun",
+      "Tanam tanaman pendamping (marigold, bawang)",
+      "Jaga kelembapan udara yang cukup"
+    ],
+    "treatment": [
+      "Gunakan akarisida sesuai dosis anjuran",
+      "Lepaskan predator alami (kutu Phytoseiulus)",
+      "Buang daun yang parah terinfeksi"
+    ],
+    "danger_level": "Sedang",
+    "references": [
+      "PlantVillage",
+      "UC IPM",
+      "Kementerian Pertanian RI"
+    ]
+  },
+  "Tomato Target Spot": {
+    "scientific_name": "Corynespora cassiicola",
+    "cause": "Disebabkan oleh jamur Corynespora cassiicola yang berkembang pada kondisi hangat dan lembap.",
+    "symptoms": [
+      "Bercak coklat oval dengan lingkaran konsentris",
+      "Daun rontok secara massal",
+      "Bercak pada batang dan buah",
+      "Tanaman melemah dan produksi menurun"
+    ],
+    "prevention": [
+      "Gunakan benih yang sehat",
+      "Lakukan rotasi tanaman",
+      "Jaga kebersihan lahan dari sisa tanaman"
+    ],
+    "treatment": [
+      "Semprotkan fungisida berbahan mankozeb atau klorotalonil",
+      "Buang bagian tanaman yang terinfeksi",
+      "Tingkatkan drainase lahan"
+    ],
+    "danger_level": "Sedang",
+    "references": [
+      "PlantVillage",
+      "CABI",
+      "Kementerian Pertanian RI"
+    ]
+  },
+  "Tomato Yellow Leaf Curl Virus": {
+    "scientific_name": "Tomato Yellow Leaf Curl Virus (TYLCV)",
+    "cause": "Disebabkan oleh virus TYLCV yang ditularkan oleh kutu kebul (Bemisia tabaci).",
+    "symptoms": [
+      "Daun menggulung ke atas",
+      "Daun menguning dan mengeriting",
+      "Tanaman menjadi kerdil",
+      "Produksi buah sangat berkurang"
+    ],
+    "prevention": [
+      "Gunakan jaring untuk menahan kutu kebul",
+      "Pilih varietas tahan virus",
+      "Kendalikan populasi kutu kebul sejak awal"
+    ],
+    "treatment": [
+      "Tidak ada pengobatan langsung untuk virus",
+      "Buang tanaman yang terinfeksi parah",
+      "Kendalikan vektor (kutu kebul) dengan insektisida"
+    ],
+    "danger_level": "Tinggi",
+    "references": [
+      "PlantVillage",
+      "FAO",
+      "World Vegetable Center"
+    ]
+  },
+  "Tomato healthy": {
+    "scientific_name": "Solanum lycopersicum",
+    "cause": "Tanaman dalam kondisi sehat, tidak terinfeksi penyakit atau hama.",
+    "symptoms": [
+      "Daun hijau segar dan vigor",
+      "Pertumbuhan normal dan seimbang",
+      "Tidak ada bercak atau gejala penyakit",
+      "Produksi buah optimal"
+    ],
+    "prevention": [
+      "Pertahankan pola penyiraman yang teratur",
+      "Gunakan pupuk seimbang sesuai kebutuhan",
+      "Jaga kebersihan lahan dan lingkungan"
+    ],
+    "treatment": [
+      "Lanjutkan perawatan rutin",
+      "Pastikan nutrisi tanaman cukup",
+      "Pantau secara berkala untuk deteksi dini"
+    ],
+    "danger_level": "Rendah",
+    "references": [
+      "PlantVillage",
+      "Kementerian Pertanian RI"
+    ]
+  },
+  "Tomato mosaic virus": {
+    "scientific_name": "Tobamovirus (TMV/ToMV)",
+    "cause": "Disebabkan oleh virus TMV/ToMV yang ditularkan melalui kontak mekanis, benih, dan media tanam.",
+    "symptoms": [
+      "Daun berwarna mozaik hijau-kuning",
+      "Daun keriput dan bentuk tidak normal",
+      "Pertumbuhan tanaman terhambat",
+      "Buah memiliki bercak dan bentuk cacat"
+    ],
+    "prevention": [
+      "Cuci tangan sebelum menangani tanaman",
+      "Gunakan varietas tahan virus",
+      "Sterilisasi alat dan media tanam"
+    ],
+    "treatment": [
+      "Tidak ada obat untuk infeksi virus",
+      "Buang dan bakar tanaman yang terinfeksi",
+      "Kendalikan vektor dan hama penyebar virus"
+    ],
+    "danger_level": "Tinggi",
+    "references": [
+      "PlantVillage",
+      "APS",
+      "Kementerian Pertanian RI"
+    ]
+  }
+}
