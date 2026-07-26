@@ -17,3 +17,5 @@ __pycache__/
 
 *.zip
 isyarat/asl_model.pkl
+
+.omop/
