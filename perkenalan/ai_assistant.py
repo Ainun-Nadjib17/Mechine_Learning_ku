@@ -42,14 +42,14 @@ def run_ai_sequence():
             tts = gTTS(text=intro_text, lang='en', slow=False)
             tts.save(intro_file)
         
-        print("🤖 AI: Speaking English intro...")
+        print(" AI: Speaking English intro...")
         pygame.mixer.music.load(intro_file)
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy():
             time.sleep(0.1)
             
         # 2. Open Browser
-        print(f"🤖 AI: Opening {GITHUB_URL} ...")
+        print(f"AI: Opening {GITHUB_URL} ...")
         webbrowser.open(GITHUB_URL)
         time.sleep(3) 
         
@@ -57,7 +57,7 @@ def run_ai_sequence():
         ai_file = os.path.join(AUDIO_FOLDER, "ai_profile_en_v2.mp3")  # [FIX] Ganti nama versi
         
         if not os.path.exists(ai_file) or os.path.getsize(ai_file) < 1000:
-            print("🤖 AI: Generating FRESH English profile voice...")
+            print(" AI: Generating FRESH English profile voice...")
             tts = gTTS(text=AI_SCRIPT, lang='en', slow=False)
             tts.save(ai_file)
             

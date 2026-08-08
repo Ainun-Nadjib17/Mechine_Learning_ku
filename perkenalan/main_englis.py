@@ -33,7 +33,7 @@ messages = [
     "I am from East Java, Pasuruan city",
     "From Informatics Engineering study program",
     "Faculty of Science and Technology",
-    "Garda Paulo Freire 51"
+    "Garda Jacques Lacan 73"
 ]
 
 # --- Setup MediaPipe ---
@@ -54,17 +54,16 @@ is_speaking = False
 ai_sequence_active = False
 ok_gesture_triggered = False
 
-# [FIX] Lock untuk thread-safe audio
 audio_lock = threading.Lock()
 
 finger_buffer = deque([0], maxlen=5)
 ok_gesture_buffer = deque([False], maxlen=5)
 
 def speak_and_browser_sequence():
-    """Fungsi Khusus Jari Ke-6 (Kepalan/0) - Versi EN - FIXED"""
+    """Fungsi Khusus Jari Ke-6 (Kepalan/0) - Versi EN"""
     global is_speaking, ai_sequence_active, last_spoken_count
     
-    if is_speaking or ai_sequence_active:
+    if ai_sequence_active:
         return
         
     ai_sequence_active = True
@@ -77,11 +76,10 @@ def speak_and_browser_sequence():
             tts = gTTS(text=intro_text, lang='en')
             tts.save(intro_file)
         
-        # [FIX] Thread-safe audio play
         with audio_lock:
             pygame.mixer.music.stop()
             pygame.mixer.music.load(intro_file)
-            time.sleep(0.1)  # Delay untuk mixer siap
+            time.sleep(0.1)
             pygame.mixer.music.play()
         while pygame.mixer.music.get_busy():
             time.sleep(0.1)
@@ -95,7 +93,6 @@ def speak_and_browser_sequence():
             tts = gTTS(text=AI_SCRIPT, lang='en')
             tts.save(ai_file)
             
-        # [FIX] Thread-safe audio play
         with audio_lock:
             pygame.mixer.music.stop()
             pygame.mixer.music.load(ai_file)
@@ -112,14 +109,8 @@ def speak_and_browser_sequence():
         last_spoken_count = -1 
 
 def speak_google_normal(text, filename):
-    """Fungsi suara biasa untuk jari 1-5 - Versi EN - FIXED"""
+    """Fungsi suara biasa untuk jari 1-5 - RESPONSIVE VERSION"""
     global is_speaking
-    
-    # [FIX] Cek langsung ke pygame mixer, bukan flag yang bisa stuck
-    with audio_lock:
-        if pygame.mixer.music.get_busy():
-            print(f"⏭️ Audio busy, skipping: {text[:30]}...")
-            return
     
     is_speaking = True
     base_name = os.path.splitext(filename)[0]
@@ -131,11 +122,11 @@ def speak_google_normal(text, filename):
             tts = gTTS(text=text, lang='en')
             tts.save(filepath)
         
-        # [FIX] Thread-safe dengan lock + stop dulu + delay
+        # [FIX] STOP audio lama dan LANGSUNG putar audio baru
         with audio_lock:
-            pygame.mixer.music.stop()
+            pygame.mixer.music.stop()  # Stop audio yang sedang jalan
             pygame.mixer.music.load(filepath)
-            time.sleep(0.1)  # [FIX] Delay krusial untuk mixer siap
+            time.sleep(0.1)
             pygame.mixer.music.play()
             print(f"🔊 Playing: {text[:30]}...")
         
@@ -192,7 +183,7 @@ def count_fingers_logic(hand_landmarks):
 
 # --- Main Loop ---
 cap = cv2.VideoCapture(0)
-print("Starting Stable Mode + AI Features (Fist/OK Gesture) - English Version [FIXED]...")
+print("Starting Stable Mode + AI Features (Fist/OK Gesture) - English Version [RESPONSIVE]...")
 
 while cap.isOpened():
     success, image = cap.read()
@@ -244,7 +235,7 @@ while cap.isOpened():
                         thread.start()
                     else:
                         audio_file = f"pesan_{stable_finger_count}.mp3"
-                        print(f"✌️ Finger {stable_finger_count} detected - Queueing audio")
+                        print(f"✌️ Finger {stable_finger_count} detected")
                         thread = threading.Thread(target=speak_google_normal, args=(messages[stable_finger_count], audio_file))
                         thread.start()
                     
