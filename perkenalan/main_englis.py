@@ -29,11 +29,11 @@ His expertise includes Cyber Security, Machine Learning, and mobile app developm
 
 messages = [
     "AI Mode Active",  
-    "Let me introduce myself, my name is Mokhamad Ainun Nadjib, you can call me Nadjib",
-    "I am from East Java, Pasuruan city",
-    "From Informatics Engineering study program",
+    "Let me introduce myself, my name is Agil Hajrin Nugroho, you can call me Agil",
+    "I am from East Java, Malang city",
+    "From Arsitecture Engineering study program",
     "Faculty of Science and Technology",
-    "Garda Jacques Lacan 73"
+    "Garda Zeno Of citium"
 ]
 
 # --- Setup MediaPipe ---

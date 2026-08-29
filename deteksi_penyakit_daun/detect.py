@@ -5,7 +5,7 @@ import cv2
 model = YOLO("best.pt")
 
 # Gambar yang mau dites
-image_path = "tests3.jpg"
+image_path = "test3.jpg"
 
 # Jalankan deteksi
 results = model(image_path)
