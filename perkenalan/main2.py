@@ -7,7 +7,7 @@ import pygame
 import webbrowser
 from gtts import gTTS
 from collections import deque
-import ai_assistant  # [BARU] Import modul eksternal sesuai request
+import ai_assistant  # [BARU] Impor modul eksternal sesuai permintaan
 
 # --- Inisialisasi Pygame Mixer untuk Audio ---
 pygame.mixer.init()
@@ -29,9 +29,9 @@ Keahliannya mencakup Cyber Security, Machine Learning, dan pengembangan aplikasi
 """
 
 # Data Teks Utama (Index 1-5)
-# Index 0 kita kosongkan atau isi placeholder, karena 0 akan jadi trigger AI
+# Index 0 kita kosongkan atau isi placeholder, karena 0 akan jadi pemicu AI
 messages = [
-    "Mode AI Aktif",  # Index 0 (Trigger untuk Jari Ke-6 / Kepalan)
+    "Mode AI Aktif",  # Index 0 (Pemicu untuk Jari Ke-6 / Kepalan)
     "Perkenalkan nama saya Mokhamad Ainun Nadjib, bisa dipanggil Nadjib", # Index 1
     "Asal saya dari Jawa Timur, kota Pasuruan", # Index 2
     "Dari prodi Teknik Informatika", # Index 3
@@ -39,7 +39,7 @@ messages = [
     "Garda Paulo Freire 51" # Index 5
 ]
 
-# --- Setup MediaPipe ---
+# --- Pengaturan MediaPipe ---
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 
@@ -50,16 +50,16 @@ hands = mp_hands.Hands(
     min_tracking_confidence=0.7
 )
 
-# --- Variabel Stabilisasi ---
+# --- Variabel Penstabilan ---
 last_spoken_count = -1
 last_speak_time = 0
 is_speaking = False
 ai_sequence_active = False
-ok_gesture_triggered = False  # [BARU] Flag khusus gestur OK
+ok_gesture_triggered = False  # [BARU] Penanda khusus gestur OK
 
-# Buffer untuk smoothing deteksi jari
+# Buffer untuk penstabilan (smoothing) deteksi jari
 finger_buffer = deque([0], maxlen=5)
-# [BARU] Buffer khusus smoothing gestur OK agar tidak flicker
+# [BARU] Buffer khusus penstabilan gestur OK agar tidak berkedip (flicker)
 ok_gesture_buffer = deque([False], maxlen=5)
 
 def speak_and_browser_sequence():
@@ -89,7 +89,7 @@ def speak_and_browser_sequence():
         print("Membuka Browser ke GitHub...")
         webbrowser.open(GITHUB_URL)
         
-        # Jeda loading
+        # Jeda pemuatan
         time.sleep(3) 
         
         # 3. Suara AI Menjelaskan Profil
@@ -104,11 +104,11 @@ def speak_and_browser_sequence():
             time.sleep(0.1)
             
     except Exception as e:
-        print(f"Error AI Sequence: {e}")
+        print(f"Kesalahan pada Urutan AI: {e}")
     finally:
         is_speaking = False
         ai_sequence_active = False
-        # Reset agar bisa dipicu lagi kalau tangan diturunkan lalu dikepal lagi
+        # Atur ulang agar bisa dipicu lagi kalau tangan diturunkan lalu dikepal lagi
         last_spoken_count = -1 
 
 def speak_google_normal(text, filename):
@@ -132,12 +132,12 @@ def speak_google_normal(text, filename):
             time.sleep(0.1)
             
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Kesalahan: {e}")
     finally:
         is_speaking = False
 
 def get_stable_finger_count(raw_count):
-    """Logika Smoothing"""
+    """Logika Penstabilan (Smoothing)"""
     finger_buffer.append(raw_count)
     if len(finger_buffer) == 5:
         counts = list(finger_buffer)
@@ -162,17 +162,17 @@ def is_ok_gesture(hand_landmarks):
     # Hitung jarak euclidean sederhana antara jempol dan telunjuk
     distance = ((thumb_tip.x - index_tip.x)**2 + (thumb_tip.y - index_tip.y)**2)**0.5
     
-    # Threshold kedekatan (sesuaikan jika perlu, 0.05 biasanya cukup untuk webcam)
+    # Ambang batas kedekatan (sesuaikan jika perlu, 0.05 biasanya cukup untuk webcam)
     touching = distance < 0.05 
     
-    # Pastikan jari Tengah(12), Manis(16), Kelingking(20) TEBUKA (y tip < y pip)
+    # Pastikan jari Tengah(12), Manis(16), Kelingking(20) TERBUKA (y tip < y pip)
     middle_open = lm[12].y < lm[10].y
     ring_open = lm[16].y < lm[14].y
     pinky_open = lm[20].y < lm[18].y
     
     return touching and middle_open and ring_open and pinky_open
 
-# [BARU] Smoothing khusus gestur OK
+# [BARU] Penstabilan khusus gestur OK
 def get_stable_ok_gesture(raw_ok):
     ok_gesture_buffer.append(raw_ok)
     if len(ok_gesture_buffer) == 5:
@@ -195,7 +195,7 @@ def count_fingers_logic(hand_landmarks):
             count += 1
     return count
 
-# --- Main Loop ---
+# --- Loop Utama ---
 cap = cv2.VideoCapture(0)
 print("Memulai Mode Stabil + Fitur AI (Jari 6/Kepalan) + Gestur OK 👌🏻...")
 
@@ -222,21 +222,21 @@ while cap.isOpened():
             raw_ok = is_ok_gesture(hand_landmarks)
             stable_ok = get_stable_ok_gesture(raw_ok)
             
-            # Logika jari tetap dijalankan untuk tampilan UI
+            # Logika jari tetap dijalankan untuk tampilan antarmuka (UI)
             raw_finger_count = count_fingers_logic(hand_landmarks)
             stable_finger_count = get_stable_finger_count(raw_finger_count)
             
             # [BARU] PRIORITAS: Jika Gestur OK terdeteksi stabil
             if stable_ok:
-                text_to_display = "👌🏻 AI Assistant (OK Gesture)"
+                text_to_display = "👌🏻 Asisten AI (Gestur OK)"
                 current_time = time.time()
                 
-                # Trigger hanya sekali per gestur, dengan cooldown 2 detik
+                # Pemicu hanya sekali per gestur, dengan jeda waktu (cooldown) 2 detik
                 if not ok_gesture_triggered and (current_time - last_speak_time > 2.0):
                     ok_gesture_triggered = True
                     last_speak_time = current_time
                     
-                    # Jalankan ai_assistant.py di thread terpisah agar kamera tidak freeze
+                    # Jalankan ai_assistant.py di thread terpisah agar kamera tidak membeku (freeze)
                     thread = threading.Thread(target=ai_assistant.run_ai_sequence)
                     thread.daemon = True
                     thread.start()
@@ -245,10 +245,10 @@ while cap.isOpened():
                 text_to_display = messages[stable_finger_count]
                 
                 current_time = time.time()
-                # Delay 2 detik
+                # Jeda 2 detik
                 if stable_finger_count != last_spoken_count and (current_time - last_speak_time > 2.0):
                     
-                    # Reset flag OK gesture saat pindah ke mode jari biasa
+                    # Atur ulang penanda gestur OK saat pindah ke mode jari biasa
                     ok_gesture_triggered = False
                     
                     if stable_finger_count == 0:
@@ -264,16 +264,16 @@ while cap.isOpened():
                     last_spoken_count = stable_finger_count
                     last_speak_time = current_time
             else:
-                # Tidak ada gestur valid, reset flag OK
+                # Tidak ada gestur valid, atur ulang penanda OK
                 ok_gesture_triggered = False
 
-    # Tampilan UI
+    # Tampilan Antarmuka (UI)
     cv2.putText(image, text_to_display, (30, 50), 
                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2, cv2.LINE_AA)
     
-    # Debug info
+    # Informasi debug
     if stable_ok:
-        mode_text = "MODE: 👌🏻 OK GESTURE"
+        mode_text = "MODE: 👌🏻 GESTUR OK"
     elif stable_finger_count == 0:
         mode_text = "MODE AI (KEPAL)"
     else:
