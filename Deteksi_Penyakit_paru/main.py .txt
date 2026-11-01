@@ -1,0 +1,120 @@
+
+import tensorflow as tf
+import numpy as np
+from PIL import Image
+import os
+
+# ============================================================
+# LUNGVISION AI
+# Chest X-Ray Classification
+# NORMAL vs PNEUMONIA
+# ============================================================
+
+MODEL_PATH = "lungvision_final.keras"
+IMG_SIZE = (224, 224)
+
+# ------------------------------------------------------------
+# 1. Load model
+# ------------------------------------------------------------
+
+print("Loading LungVision AI model...")
+
+model = tf.keras.models.load_model(MODEL_PATH)
+
+print("Model berhasil dimuat!")
+print()
+
+
+# ------------------------------------------------------------
+# 2. Fungsi preprocessing
+# ------------------------------------------------------------
+
+def preprocess_image(image_path):
+    """
+    Membaca dan mempersiapkan gambar X-ray
+    agar sesuai dengan input EfficientNetB0.
+    """
+
+    image = Image.open(image_path).convert("RGB")
+
+    image = image.resize(IMG_SIZE)
+
+    image_array = np.array(image, dtype=np.float32)
+
+    # Tambahkan batch dimension
+    image_array = np.expand_dims(image_array, axis=0)
+
+    return image_array
+
+
+# ------------------------------------------------------------
+# 3. Fungsi prediksi
+# ------------------------------------------------------------
+
+def predict(image_path):
+
+    if not os.path.exists(image_path):
+        print("File tidak ditemukan!")
+        return
+
+    print("Menganalisis gambar...")
+    print(f"Image: {image_path}")
+    print()
+
+    image = preprocess_image(image_path)
+
+    # Prediksi
+    prediction = model.predict(image, verbose=0)
+
+    # Sigmoid output:
+    # mendekati 0 = NORMAL
+    # mendekati 1 = PNEUMONIA
+
+    pneumonia_probability = float(prediction[0][0])
+
+    normal_probability = 1 - pneumonia_probability
+
+    # Threshold default
+    threshold = 0.5
+
+    if pneumonia_probability >= threshold:
+        result = "PNEUMONIA"
+        confidence = pneumonia_probability
+    else:
+        result = "NORMAL"
+        confidence = normal_probability
+
+    # --------------------------------------------------------
+    # Hasil
+    # --------------------------------------------------------
+
+    print("=" * 50)
+    print("           LUNGVISION AI RESULT")
+    print("=" * 50)
+
+    print(f"Prediction : {result}")
+    print(f"Confidence : {confidence * 100:.2f}%")
+    print()
+
+    print(f"NORMAL     : {normal_probability * 100:.2f}%")
+    print(f"PNEUMONIA  : {pneumonia_probability * 100:.2f}%")
+
+    print("=" * 50)
+
+    return {
+        "prediction": result,
+        "confidence": confidence,
+        "normal_probability": normal_probability,
+        "pneumonia_probability": pneumonia_probability
+    }
+
+
+# ------------------------------------------------------------
+# 4. Jalankan program
+# ------------------------------------------------------------
+
+if __name__ == "__main__":
+
+    image_path = input("Masukkan path gambar X-ray: ").strip()
+
+    predict(image_path)

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Control System</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="brand">QC<span> SYSTEM</span></div>
+    <div class="status">
+        <span class="dot"></span> AI SYSTEM
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <p class="eyebrow">AI-POWERED INDUSTRIAL INSPECTION</p>
+        <h1>QUALITY CONTROL<br><span>SYSTEM</span></h1>
+        <p class="description">
+            Automated product anomaly detection powered by PatchCore.
+        </p>
+    </section>
+
+    <section class="workspace">
+        <div class="panel">
+            <h2>01 / INPUT IMAGE</h2>
+
+            <label class="upload-area" for="imageInput">
+                <div class="upload-icon">↑</div>
+                <strong>Choose product image</strong>
+                <p>PNG, JPG, JPEG</p>
+                <span id="fileName">No image selected</span>
+            </label>
+
+            <input type="file" id="imageInput"
+                   accept="image/png,image/jpeg" hidden>
+
+            <img id="preview" alt="Product preview" hidden>
+
+            <button id="inspectButton" disabled>
+                START INSPECTION →
+            </button>
+        </div>
+
+        <div class="panel result-panel">
+            <h2>02 / INSPECTION RESULT</h2>
+
+            <div id="emptyState">
+                <div class="scan-icon">⌕</div>
+                <p>Waiting for image analysis...</p>
+            </div>
+
+            <div id="result" hidden>
+                <div id="prediction" class="prediction"></div>
+                <div class="score">
+                    <span>Anomaly Score</span>
+                    <strong id="score">0.0000</strong>
+                </div>
+
+                <h3>ANOMALY MAP</h3>
+                <canvas id="anomalyCanvas"></canvas>
+            </div>
+
+            <p id="errorMessage"></p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    QUALITY CONTROL SYSTEM · PATCHCORE · COMPUTER VISION
+</footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+
+anomalib==2.7.1.dev0
+streamlit
+opencv-python
+pillow
+numpy
+matplotlib
