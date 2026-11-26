@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape of My Heart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        canvas {
+            display: block;
+            background: #000;
+        }
+
+        .info {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: #666;
+            font-size: 12px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">Press SPACE to skip | ESC to exit</div>
+    <canvas id="canvas"></canvas>
+
+    <!-- Musik latar: sudah autoplay (muted) supaya posisi lagu langsung berjalan -->
+    <audio id="bgm" src="love.mpeg" type="audio/mpeg" preload="auto" loop muted playsinline autoplay></audio>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Lirik lagu
+        const LYRICS_LINES = [
+            "Got nothing to",
+            "hide no more",
+            "I don't know where",
+            "to start",
+            "But to show you",
+            "the shape of my heart",
+            "I'm lookin' back on",
+            "things I've done",
+            "I never wanna play",
+            "the same old part",
+            "I'll keep you in",
+            "the dark",
+            "Now let me show",
+            "you the shape of",
+            "my heart"
+        ];
+
+        // Fungsi membuat bentuk hati
+        function getHeartPoints(cx, cy, size) {
+            const points = [];
+            for (let i = 0; i < 100; i++) {
+                const t = (Math.PI * 2 * i) / 100;
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+                points.push({
+                    x: cx + x * size,
+                    y: cy + y * size
+                });
+            }
+            return points;
+        }
+
+        // Gambar hati
+        function drawHeart(ctx, points, fillColor, strokeColor) {
+            if (points.length < 2) return;
+            
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            
+            ctx.closePath();
+            ctx.fillStyle = fillColor;
+            ctx.fill();
+            
+            if (strokeColor) {
+                ctx.strokeStyle = strokeColor;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        }
+
+        // Kelas untuk hati besar dengan lirik
+        class FloatingHeart {
+            constructor(x, y, lyricIndex) {
+                this.x = x;
+                this.y = y;
+                this.baseSize = 8;
+                this.size = 0;
+                this.maxSize = this.baseSize + Math.random() * 3;
+                this.lyricIndex = lyricIndex;
+                this.lyricText = LYRICS_LINES[lyricIndex % LYRICS_LINES.length];
+                this.speed = 1.5 + Math.random();
+                this.opacity = 1;
+            }
+
+            update() {
+                this.y -= this.speed;
+                if (this.size < this.maxSize) {
+                    this.size += 0.1;
+                }
+                return this.y > -150;
+            }
+
+            draw() {
+                if (this.size <= 0) return;
+
+                const points = getHeartPoints(this.x, this.y, this.size);
+                
+                // Gambar hati dengan efek glow
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = 'rgba(255, 0, 0, 0.8)';
+                drawHeart(ctx, points, '#ff0000', '#aa0000');
+                ctx.shadowBlur = 0;
+
+                // Gambar teks
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 20px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.lyricText, this.x, this.y);
+            }
+        }
+
+        // Kelas untuk hati kecil
+        class SmallHeart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 50;
+                this.size = 3 + Math.random() * 5;
+                this.speed = 1 + Math.random() * 2;
+                this.color = ['#ff0000', '#ff6464', '#ff9696'][Math.floor(Math.random() * 3)];
+                this.wobble = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                this.y -= this.speed;
+                this.x += Math.sin(this.y * 0.01 + this.wobble) * 0.5;
+                
+                // Wrap around
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                
+                return this.y > -20;
+            }
+
+            draw() {
+                const points = getHeartPoints(this.x, this.y, this.size / 15);
+                ctx.globalAlpha = 0.6;
+                drawHeart(ctx, points, this.color, null);
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        // Variabel utama
+        let bigHearts = [];
+        let smallHearts = [];
+        let currentLyricIndex = 0;
+        let spawnTimer = 0;
+        let frameCount = 0;
+
+        // Animation loop
+        function animate() {
+            frameCount++;
+            
+            // Clear canvas
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Spawn hati besar baru
+            spawnTimer++;
+            if (spawnTimer >= 180) { // Setiap 3 detik
+                const xPos = 200 + Math.random() * (canvas.width - 400);
+                bigHearts.push(new FloatingHeart(xPos, canvas.height + 50, currentLyricIndex));
+                currentLyricIndex++;
+                spawnTimer = 0;
+            }
+
+            // Spawn hati kecil
+            if (Math.random() < 0.3) {
+                smallHearts.push(new SmallHeart());
+            }
+
+            // Update dan gambar hati besar
+            bigHearts = bigHearts.filter(heart => {
+                const alive = heart.update();
+                if (alive) heart.draw();
+                return alive;
+            });
+
+            // Update dan gambar hati kecil
+            smallHearts = smallHearts.filter(heart => {
+                const alive = heart.update();
+                if (alive) heart.draw();
+                return alive;
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                // Skip ke lirik berikutnya
+                spawnTimer = 179;
+            }
+            if (e.code === 'Escape') {
+                // Pause/play
+                if (document.hidden) {
+                    animate();
+                }
+            }
+        });
+
+        // Start animation
+        animate();
+    </script>
+
+    <script>
+        // Musik latar: love.mpeg
+        const bgm = document.getElementById('bgm');
+        bgm.volume = 0.7;
+
+        const GESTURES = ['pointerdown', 'keydown', 'touchstart', 'click'];
+
+        function stopStartListeners() {
+            GESTURES.forEach((evt) => {
+                window.removeEventListener(evt, startMusic);
+            });
+        }
+
+        // Lagu sudah berjalan dalam mode mute, jadi cukup unmute -> suara langsung keluar
+        function startMusic() {
+            bgm.muted = false;
+            if (bgm.paused) {
+                bgm.play().then(stopStartListeners).catch(() => {});
+            } else {
+                stopStartListeners();
+            }
+        }
+
+        GESTURES.forEach((evt) => {
+            window.addEventListener(evt, startMusic);
+        });
+
+        // Coba langsung bersuara saat load; kalau diblokir, biarkan mute berjalan
+        bgm.muted = false;
+        const tryPlay = bgm.play();
+        if (tryPlay && tryPlay.then) {
+            tryPlay.then(stopStartListeners).catch(() => {
+                bgm.muted = true;
+                bgm.play().catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>
